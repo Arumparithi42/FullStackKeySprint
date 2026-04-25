@@ -105,7 +105,7 @@ export default function TypingPage() {
 
   useEffect(() => {
     const saveResultsToFirebase = async () => {
-      if (!testEnded || !currentUser || hasSavedResultsRef.current) {
+      if (!testEnded || hasSavedResultsRef.current) {
         return;
       }
 
@@ -120,19 +120,36 @@ export default function TypingPage() {
       };
 
       try {
-        const userDocRef = doc(db, 'users', currentUser.uid);
-        await setDoc(
-          userDocRef,
-          {
-            lastActive: serverTimestamp(),
-            uid: currentUser.uid,
-          },
-          { merge: true }
-        );
-        await addDoc(collection(userDocRef, 'tests'), stats);
-        hasSavedResultsRef.current = true;
+        if (currentUser?.uid) {
+          const userDocRef = doc(db, 'users', currentUser.uid);
+          await setDoc(
+            userDocRef,
+            {
+              lastActive: serverTimestamp(),
+              uid: currentUser.uid,
+            },
+            { merge: true }
+          );
+          await addDoc(collection(userDocRef, 'tests'), stats);
+        }
       } catch (error) {
-        console.error('Error saving results:', error);
+        console.error('Error saving results to Firebase:', error);
+      }
+
+      // Save stats to MongoDB so they reflect on the Profile page
+      try {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser && storedUser.uid) {
+          await updateUserStats(storedUser.uid, {
+            wpm,
+            accuracy,
+            weakestLetter,
+          });
+        }
+      } catch (error) {
+        console.error('Error saving stats to MongoDB:', error);
+      } finally {
+        hasSavedResultsRef.current = true;
       }
     };
 

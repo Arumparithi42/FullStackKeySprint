@@ -1,6 +1,7 @@
 # Node
 node_modules/
 typing-test-backend/node_modules/
+dist/
 
 # Env
 .env
