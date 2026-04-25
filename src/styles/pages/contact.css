@@ -1,0 +1,241 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(180deg, #eef9fb, #f8ffff);
+    color: #081024;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #081024;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.homepng{
+     height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00d4ff;
+    display: block;
+    overflow: hidden;
+}
+
+.website-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #00d4ff;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.navigation ul {
+    display: flex;
+    list-style: none;
+    gap: 24px;
+    align-items: center;
+}
+
+.home-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.navigation ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.navigation ul li a:hover {
+    background-color: #00d4ff;
+    color: #1a1a2e;
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-icon {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00d4ff;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.contact-page {
+    padding: 45px 0 65px;
+}
+
+.contact-card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 16px 36px rgba(2, 6, 23, 0.08);
+}
+
+.contact-card h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: #021427;
+}
+
+.subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #0f2d3a;
+    margin-bottom: 28px;
+}
+
+.back-home-btn {
+    display: inline-block;
+    margin-bottom: 22px;
+    text-decoration: none;
+    background: #009ac2;
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.back-home-btn:hover {
+    background: #007e9e;
+    box-shadow: 0 6px 16px rgba(0, 154, 194, 0.3);
+}
+
+.team-list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+}
+
+.team-list li {
+    padding: 16px 18px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(0, 179, 196, 0.08));
+    border-left: 6px solid #00d4ff;
+    border-radius: 10px;
+    display: grid;
+    gap: 6px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #021427;
+}
+
+.detail {
+    font-size: 16px;
+    color: #0d2c39;
+}
+
+.site-footer {
+    background: #0b1220;
+    color: #cbd5e1;
+    padding: 12px 0;
+}
+
+.footer-grid {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8px 10px;
+}
+
+.footer-links a {
+    color: #e2e8f0;
+    margin-right: 10px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 6px;
+    background: rgba(0, 212, 255, 0.12);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    transition: all 0.2s ease;
+}
+
+.footer-links a:hover {
+    background: #00d4ff;
+    color: #081024;
+    transform: translateY(-2px);
+}
+
+.footer-brand h4 {
+    color: #00d4ff;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .website-name {
+        font-size: 22px;
+    }
+
+    .navigation ul {
+        gap: 10px;
+    }
+
+    .navigation ul li a {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .contact-card h2 {
+        font-size: 26px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .name {
+        font-size: 18px;
+    }
+}

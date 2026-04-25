@@ -1,0 +1,117 @@
+*
+{
+    box-sizing: border-box;
+}
+html {
+    font-size: clamp(14px, 1.2vw, 18px);
+}
+body
+{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    min-height:100vh;
+    margin:0;
+    background-image: url("background.webp");
+  background-size: cover;      
+  background-position: center;  
+  background-repeat: no-repeat;
+}
+.card
+{
+    width: min(90vw, 600px);  
+    box-shadow: 5px 5px 15px grey;
+    max-width:90%;
+    border-radius:0.5rem;
+    background-color:rgba(255,255,255,0.8);
+    transition: padding 0.5s;
+    padding: clamp(1rem, 3vw, 2.5rem);
+}
+.card:hover
+{
+    padding: clamp(1.2rem, 3.5vw, 3rem);
+}
+.landr
+{
+    padding: 1rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+}
+.landr p
+{
+    font-family: "Rubik",Arial;
+    font-weight:bold;
+    font-size:1rem;
+}
+.login, .register
+{
+    border:0px;
+    cursor:pointer;
+    font-size:1.2rem;
+    transition: padding 0.5s,font-size 0.5s,box-shadow 0.5s,background-color 0.5s,color 0.5s;
+    font-family:"Rubik", Arial;
+    box-shadow: 2px 2px 15px gray;
+    border-radius:0.5rem;
+    padding:0.5rem;
+}
+.login:hover, .register:hover
+{
+    padding:0.5rem;
+    font-size:1.4rem;
+    background-color:green;
+    color:white;
+    box-shadow: 5px 5px 15px grey;
+}
+.num-det
+{
+    display: flex;
+    justify-content: space-between; 
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    padding:1rem;
+    border:0px;
+    background-color:rgb(255, 255, 255);
+    opacity:0.8;
+    margin: 0.6rem 0.6rem 0.6rem 0.6rem;
+    border-radius:0.5rem;
+    transition:opacity 0.5s,box-shadow 0.5s,color 0.5s;
+}
+.num-det:hover
+{
+    opacity:1;
+    box-shadow: 0.1rem 0.1rem 15px grey;
+    color:rgb(0, 0, 0);
+}
+.num-det1, .num-det2, .num-det3
+{
+    text-align:center;
+    padding:.5rem;
+    border-radius:0.3rem;
+    transition: box-shadow 0.5s;
+
+}
+.num
+{
+    color:purple;
+    font-family:"Rubik",sans-serif;
+    font-weight:bold;
+    font-size:1.6rem;
+}
+.det
+{
+    color:rgb(63, 63, 63);
+    font-weight:bold;
+    font-size:0.9rem;
+    font-family: "Rubik",Arial;
+}
+.num1
+{
+    font-size:0.7rem;
+}
+.num2
+{
+    font-size:0.7rem;
+}

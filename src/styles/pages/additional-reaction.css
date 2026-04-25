@@ -1,0 +1,87 @@
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+}
+.set-timer
+{
+    display:flex;
+    flex-direction:row;
+    border:0;
+    border-radius:.3rem;
+    background-color:rgb(199, 199, 199);
+}   
+.timer
+{
+    font-size:2.5rem;
+    font-family:"Rubik",sans-serif;
+    font-weight:bold;
+
+}
+.time-elt
+{
+    border:1px solid blue;
+    padding:.5rem;
+    margin:.5rem;
+    font-size:0.7rem;
+    font-family: sans-serif,Arial;
+    cursor:pointer;
+    background-color:blue;
+    color:white;
+    font-weight:bold;
+    transition: padding 0.5s;
+    border-radius:.2rem;
+}
+.time-elt.active
+{
+    background-color: red;
+}
+.quote-main
+{
+    background-color:grey;
+    border:0px;
+    box-shadow:0 0 30px green;
+    border-radius: .5rem;
+    padding:1rem;
+    margin:1rem;
+}
+.quote-display
+{
+    background-color:grey;
+    color:white;
+    box-shadow:0 0 15px black;
+    padding:1rem;
+    width:35rem;
+    height:10rem;
+    border-radius:.5rem;
+    font-size:2rem;
+}
+.type-area {
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    resize: none;
+    overflow: hidden;
+    min-height: 60px;
+    padding: 1rem;
+    font-size:inherit;
+    font-family: inherit; 
+    line-height: 1.5; 
+    font-size:2rem;
+}
+.correct
+{
+    color:green;
+}
+.incorrect
+{
+    color:red;
+    text-decoration:underline;
+}

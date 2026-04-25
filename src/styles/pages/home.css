@@ -1,0 +1,271 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #081024;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo Container - Left Side */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.website-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #00d4ff;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Navigation - Right Side */
+.navigation ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+}
+
+.navigation ul li {
+    margin: 0;
+}
+
+.navigation ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.navigation ul li a:hover {
+    background-color: #00d4ff;
+    color: #1a1a2e;
+    transform: translateY(-2px);
+}
+
+/* Profile Item Styles */
+.profile-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-icon {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00d4ff;
+    display: block;
+    overflow: hidden;
+}
+
+/* Layout helpers */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #111;
+    background: #e6e6e6;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:hover { 
+    transform: translateY(-3px); 
+}
+.btn.primary { 
+    background: #00d4ff; color: #0f1720; 
+}
+
+/* Hero */
+.hero { 
+    background: linear-gradient(90deg,#00d4ff 0%, #00b3c6 100%); color: #081024; padding: 60px 0; 
+}
+.hero-content { 
+    text-align: center;
+ }
+.hero h2 { 
+    font-size: 36px; margin-bottom: 10px; 
+}
+.hero p {
+     font-size: 18px; margin-bottom: 18px; opacity: 0.95; 
+    }
+
+/* Ensure primary button stands out on bright hero */
+.hero .btn.primary {
+     background: #081024;
+      color: #ffffff; 
+    }
+
+
+/* Features */
+.features { 
+    padding: 56px 0; background: linear-gradient(180deg,#f6ffff, #f0fbfc);
+ }
+.features-grid { 
+    display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap: 28px; align-items: stretch; 
+}
+.feature {
+    background: linear-gradient(135deg, rgba(0,212,255,0.12), rgba(0,179,196,0.08));
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 14px 36px rgba(2,6,23,0.06);
+    border-left: 8px solid rgba(0,212,255,0.22);
+    transition: transform 0.22s cubic-bezier(.2,.9,.3,1), box-shadow 0.22s ease, border-color 0.22s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 200px;
+}
+.feature:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(2,6,23,0.14);
+    border-left-color: #00d4ff;
+}
+.feature h3 { 
+    margin: 0; color: #021427; font-size: 22px; font-weight: 800; 
+}
+.feature p { 
+    margin: 0; color: #04202a; opacity: 0.95; font-size: 15px;
+ }
+
+/* Optional icon circle at top-left of the card */
+.feature::before {
+    content: '';
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(180deg,#00d4ff,#00b3c6);
+    box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+    transform: translateY(-8px);
+}
+
+/* How it works */
+.how-it-works { background: linear-gradient(180deg,#eef9fb,#f8ffff); padding: 56px 0; }
+.how-it-works .container { max-width: 1100px; }
+.how-it-works h3 { text-align: center; color: #021427; margin-bottom: 18px; font-size: 24px; }
+.how-it-works ol {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+.how-it-works ol li {
+    counter-increment: step;
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    min-height: 120px;
+    color: #04202a;
+    font-weight: 700;
+    font-size: 16px;
+}
+.how-it-works ol li::before {
+    content: counter(step);
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    border-radius: 10px;
+    background: linear-gradient(180deg,#00d4ff,#00b3c6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+    font-size: 16px;
+}
+.how-it-works ol li:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 50px rgba(2,6,23,0.12);
+    border-left: 6px solid #00d4ff;
+}
+
+/* CTA removed - styles cleaned up */
+
+/* Footer */
+.site-footer {
+    background: #0b1220;
+    color: #cbd5e1;
+    padding: 12px 0;
+}
+.footer-grid {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8px 10px;
+}
+.footer-links a { 
+    color: #e2e8f0;
+    margin-right: 10px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 6px;
+    background: rgba(0, 212, 255, 0.12);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    transition: all 0.2s ease;
+ }
+
+.footer-links a:hover {
+    background: #00d4ff;
+    color: #081024;
+    transform: translateY(-2px);
+}
+.footer-brand h4 { 
+    color: #00d4ff;
+ }
+
+
+
