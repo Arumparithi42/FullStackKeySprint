@@ -159,6 +159,82 @@ router.get('/user/:uid/stats', async (req, res) => {
   }
 });
 
+// Save test result
+router.post('/user/:uid/test-result', async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    const { wpm, accuracy, weakestLetter, errors, testDuration } = req.body;
+
+    console.log('Received test result:', { uid, wpm, accuracy, weakestLetter, errors, testDuration });
+
+    if (!uid || wpm === undefined || accuracy === undefined) {
+      console.log('Invalid test data:', { uid, wpm, accuracy });
+      return res.status(400).json({ message: 'Invalid test data' });
+    }
+
+    let user = await User.findOne({ uid });
+    if (!user) {
+      console.log('User not found:', uid);
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('User found:', { uid, username: user.username });
+
+    // Add test to history
+    if (!user.testHistory) {
+      user.testHistory = [];
+    }
+    user.testHistory.push({
+      wpm,
+      accuracy,
+      weakestLetter,
+      errors,
+      testDuration,
+      timestamp: new Date(),
+    });
+
+    // Update current test stats
+    user.stats.wpm = wpm;
+    user.stats.accuracy = accuracy;
+    user.stats.weakestLetter = weakestLetter || '-';
+
+    // Calculate total tests and averages
+    user.stats.totalTests = (user.stats.totalTests || 0) + 1;
+    user.stats.averageWpm = Math.round(
+      (user.stats.averageWpm * (user.stats.totalTests - 1) + wpm) / user.stats.totalTests
+    );
+    user.stats.averageAccuracy = Math.round(
+      (user.stats.averageAccuracy * (user.stats.totalTests - 1) + accuracy) / user.stats.totalTests
+    );
+
+    // Find most frequent weak letter
+    const letterFrequency = {};
+    user.testHistory.forEach(test => {
+      if (test.weakestLetter && test.weakestLetter !== '-' && test.weakestLetter !== 'None') {
+        const letter = test.weakestLetter.split(' ')[0];
+        letterFrequency[letter] = (letterFrequency[letter] || 0) + 1;
+      }
+    });
+    let mostFrequentLetter = '-';
+    let maxFrequency = 0;
+    Object.entries(letterFrequency).forEach(([letter, freq]) => {
+      if (freq > maxFrequency) {
+        maxFrequency = freq;
+        mostFrequentLetter = letter;
+      }
+    });
+    user.stats.mostFrequentWeakLetter = mostFrequentLetter;
+
+    user.updatedAt = new Date();
+    await user.save();
+    console.log('Test result saved successfully:', { uid, stats: user.stats });
+    res.json(user.stats);
+  } catch (error) {
+    console.error('Error saving test result:', error);
+    res.status(500).json({ message: 'Error saving test result', error: error.message });
+  }
+});
+
 // Change password endpoint
 router.post('/change-password', async (req, res) => {
   try {

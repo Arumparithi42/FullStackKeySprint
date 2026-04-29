@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { auth, db } from '../services/firebase';
+import { auth } from '../services/firebase';
+import { saveTestResult } from '../services/auth';
 import '../styles/pages/home.css';
 import '../styles/pages/typing.css';
 
@@ -22,6 +22,7 @@ export default function TypingPage() {
   const inputRef = useRef(null);
   const hasSavedResultsRef = useRef(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [backendUid, setBackendUid] = useState(null);
   const [totalTime, setTotalTime] = useState(60);
   const [timeLeft, setTimeLeft] = useState(60);
   const [started, setStarted] = useState(false);
@@ -30,6 +31,12 @@ export default function TypingPage() {
   const [input, setInput] = useState('');
 
   useEffect(() => {
+    // Get uid from localStorage (backend uid)
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.uid) {
+      setBackendUid(user.uid);
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user || null);
     });
@@ -104,57 +111,34 @@ export default function TypingPage() {
   const testEnded = !started && (timeLeft === 0 || (input.length >= chars.length && chars.length > 0));
 
   useEffect(() => {
-    const saveResultsToFirebase = async () => {
-      if (!testEnded || hasSavedResultsRef.current) {
+    const saveResultsToBackend = async () => {
+      if (!testEnded || !backendUid || hasSavedResultsRef.current) {
+        console.log('Save skipped:', { testEnded, backendUid, alreadySaved: hasSavedResultsRef.current });
         return;
       }
 
       const weakestLetter = weakestLive === '-' ? 'None' : weakestLive.split(' ')[0];
-      const stats = {
+      const testData = {
         wpm,
         accuracy,
         errors,
         weakestLetter,
         testDuration: totalTime,
-        timestamp: serverTimestamp(),
       };
 
-      try {
-        if (currentUser?.uid) {
-          const userDocRef = doc(db, 'users', currentUser.uid);
-          await setDoc(
-            userDocRef,
-            {
-              lastActive: serverTimestamp(),
-              uid: currentUser.uid,
-            },
-            { merge: true }
-          );
-          await addDoc(collection(userDocRef, 'tests'), stats);
-        }
-      } catch (error) {
-        console.error('Error saving results to Firebase:', error);
-      }
+      console.log('Saving test result:', { uid: backendUid, testData });
 
-      // Save stats to MongoDB so they reflect on the Profile page
       try {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser && storedUser.uid) {
-          await updateUserStats(storedUser.uid, {
-            wpm,
-            accuracy,
-            weakestLetter,
-          });
-        }
-      } catch (error) {
-        console.error('Error saving stats to MongoDB:', error);
-      } finally {
+        const result = await saveTestResult(backendUid, testData);
+        console.log('Test result saved successfully:', result);
         hasSavedResultsRef.current = true;
+      } catch (error) {
+        console.error('Error saving results:', error);
       }
     };
 
-    saveResultsToFirebase();
-  }, [accuracy, currentUser, errors, testEnded, totalTime, weakestLive, wpm]);
+    saveResultsToBackend();
+  }, [accuracy, backendUid, errors, testEnded, totalTime, weakestLive, wpm]);
 
   const prepareText = (nextText) => {
     hasSavedResultsRef.current = false;

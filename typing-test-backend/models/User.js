@@ -58,7 +58,32 @@ const userSchema = new mongoose.Schema(
         type: Number,
         default: 0,
       },
+      mostFrequentWeakLetter: {
+        type: String,
+        default: '-',
+      },
     },
+    testHistory: [{
+      wpm: {
+        type: Number,
+      },
+      accuracy: {
+        type: Number,
+      },
+      weakestLetter: {
+        type: String,
+      },
+      errors: {
+        type: Number,
+      },
+      testDuration: {
+        type: Number,
+      },
+      timestamp: {
+        type: Date,
+        default: Date.now,
+      },
+    }],
     createdAt: {
       type: Date,
       default: Date.now,

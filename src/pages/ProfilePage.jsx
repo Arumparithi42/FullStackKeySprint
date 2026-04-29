@@ -23,52 +23,56 @@ export default function ProfilePage() {
     totalTests: 0,
   });
 
-  useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user || !user.uid) {
-          setProfile({ username: 'Not signed in', email: '-', phone: '', bio: '' });
-          setStats({ wpm: 0, accuracy: 0, weakestLetter: '-' });
-          setAverageStats({ averageWpm: 0, averageAccuracy: 0, mostFrequentWeakLetter: '-', totalTests: 0 });
-          return;
-        }
+  // Refresh profile and stats
+  const refreshStats = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user || !user.uid) {
+        setProfile({ username: 'Not signed in', email: '-', phone: '', bio: '' });
+        setStats({ wpm: 0, accuracy: 0, weakestLetter: '-' });
+        setAverageStats({ averageWpm: 0, averageAccuracy: 0, mostFrequentWeakLetter: '-', totalTests: 0 });
+        return;
+      }
 
-        // Fetch user profile data
-        const profileData = await getUserProfile(user.uid);
-        setProfile({
-          username: profileData.username || 'Unknown',
-          email: profileData.email || '',
-          phone: profileData.phone || '',
-          bio: profileData.bio || '',
+      // Fetch user profile data
+      const profileData = await getUserProfile(user.uid);
+      setProfile({
+        username: profileData.username || 'Unknown',
+        email: profileData.email || '',
+        phone: profileData.phone || '',
+        bio: profileData.bio || '',
+      });
+
+      // Fetch stats
+      try {
+        const statsData = await getUserStats(user.uid);
+        setStats({
+          wpm: statsData.wpm || 0,
+          accuracy: statsData.accuracy || 0,
+          weakestLetter: statsData.weakestLetter || '-',
         });
 
-        // Fetch stats
-        try {
-          const statsData = await getUserStats(user.uid);
-          setStats({
-            wpm: statsData.wpm || 0,
-            accuracy: statsData.accuracy || 0,
-            weakestLetter: statsData.weakestLetter || '-',
-          });
-
-          setAverageStats({
-            averageWpm: statsData.averageWpm || 0,
-            averageAccuracy: statsData.averageAccuracy || 0,
-            mostFrequentWeakLetter: statsData.weakestLetter || '-',
-            totalTests: statsData.totalTests || 0,
-          });
-        } catch {
-          setStats({ wpm: 0, accuracy: 0, weakestLetter: '-' });
-          setAverageStats({ averageWpm: 0, averageAccuracy: 0, mostFrequentWeakLetter: '-', totalTests: 0 });
-        }
-      } catch (error) {
-        console.error('Error loading profile:', error);
-        setProfile({ username: 'Error', email: '-', phone: '', bio: '' });
+        setAverageStats({
+          averageWpm: statsData.averageWpm || 0,
+          averageAccuracy: statsData.averageAccuracy || 0,
+          mostFrequentWeakLetter: statsData.mostFrequentWeakLetter || '-',
+          totalTests: statsData.totalTests || 0,
+        });
+      } catch {
+        setStats({ wpm: 0, accuracy: 0, weakestLetter: '-' });
+        setAverageStats({ averageWpm: 0, averageAccuracy: 0, mostFrequentWeakLetter: '-', totalTests: 0 });
       }
-    };
+    } catch (error) {
+      console.error('Error loading profile:', error);
+      setProfile({ username: 'Error', email: '-', phone: '', bio: '' });
+    }
+  };
 
-    loadProfile();
+  useEffect(() => {
+    refreshStats();
+    // Refresh stats every 5 seconds to pick up updates from TypingPage
+    const interval = setInterval(refreshStats, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
