@@ -4,7 +4,7 @@ Small React + Express typing-test project (still in development process).
 
 ## About
 
-KeySprint is a typing test web application where users can practice and evaluate their typing.
+KeySprint is an interactive typing test web application that helps users evaluate and improve their typing speed, accuracy, and efficiency. It provides real-time performance metrics and a responsive platform for continuous practice.
 
 ## Features
 
