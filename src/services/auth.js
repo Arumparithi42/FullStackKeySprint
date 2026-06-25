@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://fullstackkeysprint.onrender.com/api';
 
 export async function registerUser({ username, email, password, repeatPassword }) {
   if (password !== repeatPassword) {
