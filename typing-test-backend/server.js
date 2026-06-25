@@ -11,9 +11,10 @@ app.use(express.json());
 
 // Update CORS to allow requests from your Vercel frontend link
 app.use(cors({
-  origin: "https://full-stack-key-sprint.vercel.app/",
+  origin: "https://full-stack-key-sprint.vercel.app", 
   credentials: true
 }));
+
 
 // MongoDB connection - Uses Render Environment Variable, falls back to local for dev
 const dbURI = process.env.MONGO_URI || "mongodb://localhost:27017/keysprint";
